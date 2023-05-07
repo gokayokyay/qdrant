@@ -22,9 +22,28 @@ RUN rustup target add $(bash target_arch.sh)
 
 COPY . .
 
-RUN depcache --target=$(bash target_arch.sh) --profile=release
+RUN --mount=type=secret,id=BUCKET_NAME \
+  --mount=type=secret,id=ACCESS_KEY \
+  --mount=type=secret,id=SECRET_KEY \
+  --mount=type=secret,id=ENDPOINT \
+  --mount=type=secret,id=REGION \
+  BUCKET_NAME=$(cat /run/secrets/BUCKET_NAME) \
+  ACCESS_KEY=$(cat /run/secrets/ACCESS_KEY) \
+  SECRET_KEY=$(cat /run/secrets/SECRET_KEY) \
+  ENDPOINT=$(cat /run/secrets/ENDPOINT) \
+  REGION=$(cat /run/secrets/REGION) depcache --target=$(bash target_arch.sh) --profile=release
+
 RUN cargo build --release --target $(bash target_arch.sh) --bin qdrant
-RUN depcache --target=$(bash target_arch.sh) --profile=release
+RUN --mount=type=secret,id=BUCKET_NAME \
+  --mount=type=secret,id=ACCESS_KEY \
+  --mount=type=secret,id=SECRET_KEY \
+  --mount=type=secret,id=ENDPOINT \
+  --mount=type=secret,id=REGION \
+  BUCKET_NAME=$(cat /run/secrets/BUCKET_NAME) \
+  ACCESS_KEY=$(cat /run/secrets/ACCESS_KEY) \
+  SECRET_KEY=$(cat /run/secrets/SECRET_KEY) \
+  ENDPOINT=$(cat /run/secrets/ENDPOINT) \
+  REGION=$(cat /run/secrets/REGION) depcache --target=$(bash target_arch.sh) --profile=release
 
 RUN mv target/$(bash target_arch.sh)/release/qdrant /qdrant/qdrant
 

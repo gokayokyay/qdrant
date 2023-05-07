@@ -27,6 +27,12 @@ jobs:
       - name: Build
         run: cargo build --features service_debug
       - name: Run integration tests
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ENDPOINT: ${{ secrets.ENDPOINT }}
+          REGION: ${{ secrets.REGION }}
         run: ./tests/integration-tests.sh
         shell: bash
   test-consensus:
@@ -75,6 +81,12 @@ jobs:
       - name: Install requests python lib
         run: pip install requests
       - name: Run integration tests - multiple peers - compose
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ENDPOINT: ${{ secrets.ENDPOINT }}
+          REGION: ${{ secrets.REGION }}
         run: ./test_restart.sh
         working-directory: ./tests/consensus_tests
 
@@ -85,6 +97,12 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Run integration tests
+        env:
+          BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
+          ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          ENDPOINT: ${{ secrets.ENDPOINT }}
+          REGION: ${{ secrets.REGION }}
         run: ./test_tls.sh
         working-directory: ./tests/tls
 
