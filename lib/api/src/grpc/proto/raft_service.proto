@@ -37,8 +37,8 @@ message Peer {
 }
 
 message AddPeerToKnownMessage {
-  optional string uri = 1;
-  optional uint32 port = 2;
+  string uri = 1;
+  uint32 port = 2;
   uint64 id = 3;
 }
 
