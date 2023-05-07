@@ -11,7 +11,7 @@ function clear_after_tests()
 }
 
 # Prevent double building in docker-compose
-DOCKER_BUILDKIT=1 docker build --secret id=REGION --secret id=ACCESS_KEY --secret id=SECRET_KEY --secret id=BUCKET_NAME --secret id=ENDPOINT ../../ --tag=qdrant_consensus
+docker build --secret id=REGION --secret id=ACCESS_KEY --secret id=SECRET_KEY --secret id=BUCKET_NAME --secret id=ENDPOINT ../../ --tag=qdrant_consensus
 docker compose down --volumes
 docker compose up -d --force-recreate
 trap clear_after_tests EXIT
