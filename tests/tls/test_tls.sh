@@ -35,7 +35,7 @@ function run_with_retry()
 }
 
 # Prevent double building in docker-compose
-docker build --secret id=REGION --secret id=ACCESS_KEY --secret id=SECRET_KEY --secret id=BUCKET_NAME --secret id=ENDPOINT ../../ --tag=qdrant_tls
+docker buildx build --secret id=REGION --secret id=ACCESS_KEY --secret id=SECRET_KEY --secret id=BUCKET_NAME --secret id=ENDPOINT ../../ --tag=qdrant_tls
 docker compose down --volumes
 docker compose up -d --force-recreate
 trap clear_after_tests EXIT
