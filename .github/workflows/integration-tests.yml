@@ -26,9 +26,10 @@ jobs:
         run: sudo apt-get install clang protobuf-compiler
       - name: Build
         run: cargo build --features service_debug
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2.5.0
       - name: Run integration tests
         env:
-          DOCKER_BUILDKIT: 1
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -81,9 +82,10 @@ jobs:
           python-version: '3.10'
       - name: Install requests python lib
         run: pip install requests
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2.5.0
       - name: Run integration tests - multiple peers - compose
         env:
-          DOCKER_BUILDKIT: 1
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
@@ -97,10 +99,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Docker Setup Buildx
+        uses: docker/setup-buildx-action@v2.5.0
       - uses: actions/checkout@v3
       - name: Run integration tests
         env:
-          DOCKER_BUILDKIT: 1
           BUCKET_NAME: ${{ secrets.BUCKET_NAME }}
           ACCESS_KEY: ${{ secrets.ACCESS_KEY }}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
