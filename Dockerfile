@@ -1,4 +1,4 @@
-FROM rust:1.69.0-buster as builder
+FROM rust:1.68.2 as builder
 WORKDIR /qdrant
 
 # based on https://github.com/docker/buildx/issues/510
